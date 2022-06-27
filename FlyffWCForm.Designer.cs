@@ -108,7 +108,7 @@
             this.autoHealBox.Enabled = false;
             this.autoHealBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.autoHealBox.Font = new System.Drawing.Font("Franklin Gothic Medium", 21.85714F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.autoHealBox.Location = new System.Drawing.Point(1558, 133);
+            this.autoHealBox.Location = new System.Drawing.Point(1558, 80);
             this.autoHealBox.Name = "autoHealBox";
             this.autoHealBox.Size = new System.Drawing.Size(326, 75);
             this.autoHealBox.TabIndex = 0;
@@ -119,11 +119,11 @@
             // 
             // autoHealTime
             // 
-            this.autoHealTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.autoHealTime.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.autoHealTime.BackColor = System.Drawing.Color.Gray;
             this.autoHealTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.autoHealTime.Enabled = false;
-            this.autoHealTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autoHealTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autoHealTime.FormattingEnabled = true;
             this.autoHealTime.Items.AddRange(new object[] {
             "Every 1 second",
@@ -136,9 +136,9 @@
             "Every 8 seconds",
             "Every 9 seconds",
             "Every 10 seconds"});
-            this.autoHealTime.Location = new System.Drawing.Point(1726, 427);
+            this.autoHealTime.Location = new System.Drawing.Point(1691, 161);
             this.autoHealTime.Name = "autoHealTime";
-            this.autoHealTime.Size = new System.Drawing.Size(158, 46);
+            this.autoHealTime.Size = new System.Drawing.Size(193, 47);
             this.autoHealTime.TabIndex = 1;
             this.autoHealTime.Visible = false;
             this.autoHealTime.DropDown += new System.EventHandler(this.autoHealTime_DropDown);

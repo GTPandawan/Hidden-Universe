@@ -82,3 +82,19 @@ Shortcut 1: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient
 Shortcut 2: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient.exe" /profilename=FlawkeeRM /pixellocation=3850,-80 /resolution=1600x2000 /assistfs_
 
 Shortcut 3: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient.exe" /profilename=FlawkeeRM2 /resolution=1600x2000 /assistfs /delaybb=800_
+
+## KNOWN ISSUES
+
+1. When dragging the web client (window mode) keyboard keys no longer register ingame.
+	**WORKAROUND:** Click the in-game chat with your mouse and it should be working again.
+   
+2. After updating the game it loads up without my profile!
+	**WORKAROUND:** Close the game and re-open it.
+
+3. AutoBuff/AutoHeal/AutoFollow do not work!
+	**FOLLOW THE INSTRUCTIONS!**
+	Make sure your keyboard is set to English. Currently if the keyboard set to any other language it sends the wrong keystrokes to the client!
+	In addition, make sure your game is configured correctly. The keybinds must be as follows:
+	AutoFollow - Requires the Z key to be configured for Follow (Default).
+	AutoHeal - Requires you to put the Heal Skill in your Action Bar and set the Action Bar Key to C Key (Default).
+	AutoBuff - Required you to configure the Taskbars 1 to 3 keybinds to F1-F3 and your Taskbar Slots to 0-9 (Where 0 is the last one).
