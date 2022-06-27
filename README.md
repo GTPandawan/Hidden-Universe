@@ -20,7 +20,7 @@ with dedicated client, QoL Improvments and Automation.
 - Launch the web client anywhere in your screen you'd like.
 - Assist Full Support Mode Available!
 
-**Assist Full Support Mode (assistfs)**
+**Assist Full Support Mode (/assistfs)**
 A lot of Flyff players are playing with two characters in perallel for either leech or support using Assist/RM.
 However, it causes a lot of inconvenience having to deal with two different game windows at the same time for each and every action needed.
 Currently available using assistfs:
@@ -33,6 +33,9 @@ Currently available using assistfs:
     -  Since this is sequencial, please don't move with target character since you can miss out some buffs.
 - **Auto Follow** - Sometimes autofollow in Flyff breaks and you find your support not following you anymore. Auto Follow make sure each 5 seconds that you're following the selected target!
     - Follow Key must be configured for Z key (default).
+	
+**Leech Mode (/leech)**
+In case you need the Auto Follow feature avilable in assistfs mode you can use this flag to enable it!
 
 
 ## Tech
@@ -69,9 +72,13 @@ However it is recommended to set and customize the flags per character needs usi
 | /PixelLocation=<x,y> | /PixelLocation=3850,-80 | Launch the web client in a specific pixel location on your Windows envrionment. Override /DisplayID flag.
 | /DisplayID=<ID>| /DisplayID=2 | Launch the web client in a specific display. Use your display ID shown in Window Display Settings. Override /PixelLocation flag.
 | /assistfs | /assistfs | Enable Assist Full Support mode - explained in Features section.
+| /delaybb=<sec-in-ms> | /delaybb=2500 | Set the delay between buffs in milliseconds. Usefull when you need to adjust based on your casting speed. Default is 1500ms (1.5 seconds).
+| /leech | /leech| Enable Leech mode - explained in Features section.
 
 **Examples:**
 
 Shortcut 1: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient.exe" /profilename=Flawkee /fullscreen /displayID=2_
 
 Shortcut 2: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient.exe" /profilename=FlawkeeRM /pixellocation=3850,-80 /resolution=1600x2000 /assistfs_
+
+Shortcut 3: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient.exe" /profilename=FlawkeeRM2 /resolution=1600x2000 /assistfs /delaybb=800_

@@ -28,24 +28,87 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Slot 0");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Slot 1");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Slot 2");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Slot 3");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Slot 4");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Slot 5");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Slot 6");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Slot 7");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Slot 8");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Slot 9");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Taskbar 1", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7,
+            treeNode8,
+            treeNode9,
+            treeNode10});
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Slot 0");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Slot 1");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Slot 2");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Slot 3");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Slot 4");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Slot 5");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Slot 6");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Slot 7");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Slot 8");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Slot 9");
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Taskbar 2", new System.Windows.Forms.TreeNode[] {
+            treeNode12,
+            treeNode13,
+            treeNode14,
+            treeNode15,
+            treeNode16,
+            treeNode17,
+            treeNode18,
+            treeNode19,
+            treeNode20,
+            treeNode21});
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Slot 0");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Slot 1");
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Slot 2");
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Slot 3");
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Slot 4");
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Slot 5");
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Slot 6");
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Slot 7");
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("Slot 8");
+            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("Slot 9");
+            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("Taskbar 3", new System.Windows.Forms.TreeNode[] {
+            treeNode23,
+            treeNode24,
+            treeNode25,
+            treeNode26,
+            treeNode27,
+            treeNode28,
+            treeNode29,
+            treeNode30,
+            treeNode31,
+            treeNode32});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FlyffWCForm));
             this.autoHealBox = new System.Windows.Forms.CheckBox();
             this.autoHealTime = new System.Windows.Forms.ComboBox();
             this.autoBuffBox = new System.Windows.Forms.CheckBox();
-            this.autoBuffList = new System.Windows.Forms.CheckedListBox();
             this.autoFollowBox = new System.Windows.Forms.CheckBox();
+            this.autoBuffTree = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // autoHealBox
             // 
-            this.autoHealBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.autoHealBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.autoHealBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.autoHealBox.AutoSize = true;
             this.autoHealBox.BackColor = System.Drawing.Color.Gray;
             this.autoHealBox.Enabled = false;
             this.autoHealBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.autoHealBox.Font = new System.Drawing.Font("Franklin Gothic Medium", 21.85714F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.autoHealBox.Location = new System.Drawing.Point(1558, 346);
+            this.autoHealBox.Location = new System.Drawing.Point(1558, 133);
             this.autoHealBox.Name = "autoHealBox";
             this.autoHealBox.Size = new System.Drawing.Size(326, 75);
             this.autoHealBox.TabIndex = 0;
@@ -60,7 +123,7 @@
             this.autoHealTime.BackColor = System.Drawing.Color.Gray;
             this.autoHealTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.autoHealTime.Enabled = false;
-            this.autoHealTime.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 14.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autoHealTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autoHealTime.FormattingEnabled = true;
             this.autoHealTime.Items.AddRange(new object[] {
             "Every 1 second",
@@ -78,18 +141,20 @@
             this.autoHealTime.Size = new System.Drawing.Size(158, 46);
             this.autoHealTime.TabIndex = 1;
             this.autoHealTime.Visible = false;
+            this.autoHealTime.DropDown += new System.EventHandler(this.autoHealTime_DropDown);
             this.autoHealTime.SelectedIndexChanged += new System.EventHandler(this.autoHealTime_SelectedIndexChanged);
+            this.autoHealTime.DropDownClosed += new System.EventHandler(this.autoHealTime_DropDownClosed);
             // 
             // autoBuffBox
             // 
-            this.autoBuffBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.autoBuffBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.autoBuffBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.autoBuffBox.AutoSize = true;
             this.autoBuffBox.BackColor = System.Drawing.Color.Gray;
             this.autoBuffBox.Enabled = false;
             this.autoBuffBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.autoBuffBox.Font = new System.Drawing.Font("Franklin Gothic Medium", 21.85714F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.autoBuffBox.Location = new System.Drawing.Point(1640, 479);
+            this.autoBuffBox.Location = new System.Drawing.Point(1640, 214);
             this.autoBuffBox.Name = "autoBuffBox";
             this.autoBuffBox.Size = new System.Drawing.Size(244, 75);
             this.autoBuffBox.TabIndex = 2;
@@ -98,45 +163,16 @@
             this.autoBuffBox.Visible = false;
             this.autoBuffBox.Click += new System.EventHandler(this.autoBuffBox_Click);
             // 
-            // autoBuffList
-            // 
-            this.autoBuffList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.autoBuffList.BackColor = System.Drawing.Color.PeachPuff;
-            this.autoBuffList.CheckOnClick = true;
-            this.autoBuffList.Enabled = false;
-            this.autoBuffList.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 15.85714F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.autoBuffList.FormattingEnabled = true;
-            this.autoBuffList.Items.AddRange(new object[] {
-            "[Taskbar Slot 0]",
-            "[Taskbar Slot 1]",
-            "[Taskbar Slot 2]",
-            "[Taskbar Slot 3]",
-            "[Taskbar Slot 4]",
-            "[Taskbar Slot 5]",
-            "[Taskbar Slot 6]",
-            "[Taskbar Slot 7]",
-            "[Taskbar Slot 8]",
-            "[Taskbar Slot 9]"});
-            this.autoBuffList.Location = new System.Drawing.Point(1693, 560);
-            this.autoBuffList.Name = "autoBuffList";
-            this.autoBuffList.Size = new System.Drawing.Size(191, 326);
-            this.autoBuffList.TabIndex = 3;
-            this.autoBuffList.TabStop = false;
-            this.autoBuffList.UseCompatibleTextRendering = true;
-            this.autoBuffList.UseTabStops = false;
-            this.autoBuffList.Visible = false;
-            this.autoBuffList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.autoBuffList_ItemCheck);
-            // 
             // autoFollowBox
             // 
-            this.autoFollowBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.autoFollowBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.autoFollowBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.autoFollowBox.AutoSize = true;
             this.autoFollowBox.BackColor = System.Drawing.Color.Gray;
             this.autoFollowBox.Enabled = false;
             this.autoFollowBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.autoFollowBox.Font = new System.Drawing.Font("Franklin Gothic Medium", 21.85714F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.autoFollowBox.Location = new System.Drawing.Point(1521, 892);
+            this.autoFollowBox.Location = new System.Drawing.Point(1521, 824);
             this.autoFollowBox.Name = "autoFollowBox";
             this.autoFollowBox.Size = new System.Drawing.Size(363, 75);
             this.autoFollowBox.TabIndex = 4;
@@ -145,13 +181,101 @@
             this.autoFollowBox.Visible = false;
             this.autoFollowBox.CheckStateChanged += new System.EventHandler(this.autoFollowBox_CheckStateChanged);
             // 
+            // autoBuffTree
+            // 
+            this.autoBuffTree.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.autoBuffTree.BackColor = System.Drawing.Color.PeachPuff;
+            this.autoBuffTree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.autoBuffTree.CheckBoxes = true;
+            this.autoBuffTree.Enabled = false;
+            this.autoBuffTree.Font = new System.Drawing.Font("Franklin Gothic Medium", 20.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autoBuffTree.ForeColor = System.Drawing.Color.Black;
+            this.autoBuffTree.FullRowSelect = true;
+            this.autoBuffTree.Location = new System.Drawing.Point(1656, 295);
+            this.autoBuffTree.Name = "autoBuffTree";
+            treeNode1.Name = "Slot0";
+            treeNode1.Text = "Slot 0";
+            treeNode2.Name = "Slot1";
+            treeNode2.Text = "Slot 1";
+            treeNode3.Name = "Slot2";
+            treeNode3.Text = "Slot 2";
+            treeNode4.Name = "Slot3";
+            treeNode4.Text = "Slot 3";
+            treeNode5.Name = "Slot4";
+            treeNode5.Text = "Slot 4";
+            treeNode6.Name = "Slot5";
+            treeNode6.Text = "Slot 5";
+            treeNode7.Name = "Slot6";
+            treeNode7.Text = "Slot 6";
+            treeNode8.Name = "Slot7";
+            treeNode8.Text = "Slot 7";
+            treeNode9.Name = "Slot8";
+            treeNode9.Text = "Slot 8";
+            treeNode10.Name = "Slot9";
+            treeNode10.Text = "Slot 9";
+            treeNode11.Name = "Taskbar1";
+            treeNode11.Text = "Taskbar 1";
+            treeNode12.Name = "Slot0";
+            treeNode12.Text = "Slot 0";
+            treeNode13.Name = "Slot1";
+            treeNode13.Text = "Slot 1";
+            treeNode14.Name = "Slot2";
+            treeNode14.Text = "Slot 2";
+            treeNode15.Name = "Slot3";
+            treeNode15.Text = "Slot 3";
+            treeNode16.Name = "Slot4";
+            treeNode16.Text = "Slot 4";
+            treeNode17.Name = "Slot5";
+            treeNode17.Text = "Slot 5";
+            treeNode18.Name = "Slot6";
+            treeNode18.Text = "Slot 6";
+            treeNode19.Name = "Slot7";
+            treeNode19.Text = "Slot 7";
+            treeNode20.Name = "Slot8";
+            treeNode20.Text = "Slot 8";
+            treeNode21.Name = "Slot9";
+            treeNode21.Text = "Slot 9";
+            treeNode22.Name = "Taskbar2";
+            treeNode22.Text = "Taskbar 2";
+            treeNode23.Name = "Slot0";
+            treeNode23.Text = "Slot 0";
+            treeNode24.Name = "Slot1";
+            treeNode24.Text = "Slot 1";
+            treeNode25.Name = "Slot2";
+            treeNode25.Text = "Slot 2";
+            treeNode26.Name = "Slot3";
+            treeNode26.Text = "Slot 3";
+            treeNode27.Name = "Slot4";
+            treeNode27.Text = "Slot 4";
+            treeNode28.Name = "Slot5";
+            treeNode28.Text = "Slot 5";
+            treeNode29.Name = "Slot6";
+            treeNode29.Text = "Slot 6";
+            treeNode30.Name = "Slot7";
+            treeNode30.Text = "Slot 7";
+            treeNode31.Name = "Slot8";
+            treeNode31.Text = "Slot 8";
+            treeNode32.Name = "Slot9";
+            treeNode32.Text = "Slot 9";
+            treeNode33.Name = "Taskbar3";
+            treeNode33.Text = "Taskbar 3";
+            this.autoBuffTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode11,
+            treeNode22,
+            treeNode33});
+            this.autoBuffTree.Scrollable = false;
+            this.autoBuffTree.Size = new System.Drawing.Size(228, 523);
+            this.autoBuffTree.TabIndex = 5;
+            this.autoBuffTree.Visible = false;
+            this.autoBuffTree.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.autoBuffTree_AfterCheck);
+            // 
             // FlyffWCForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(1896, 1016);
+            this.Controls.Add(this.autoBuffTree);
             this.Controls.Add(this.autoFollowBox);
-            this.Controls.Add(this.autoBuffList);
             this.Controls.Add(this.autoBuffBox);
             this.Controls.Add(this.autoHealTime);
             this.Controls.Add(this.autoHealBox);
@@ -173,8 +297,8 @@
         private System.Windows.Forms.CheckBox autoHealBox;
         private System.Windows.Forms.ComboBox autoHealTime;
         private System.Windows.Forms.CheckBox autoBuffBox;
-        private System.Windows.Forms.CheckedListBox autoBuffList;
         private System.Windows.Forms.CheckBox autoFollowBox;
+        private System.Windows.Forms.TreeView autoBuffTree;
     }
 }
 

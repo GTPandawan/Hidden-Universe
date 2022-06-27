@@ -11,17 +11,12 @@ namespace HiddenUniverse_WebClient
         private static ArgumentManager _instance;
         public static string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         public static string profilePath = appData + @"\FlyffUniverse\DefaultProfile";
-        public static string assistfsConfigPath = appData + @"\FlyffUniverse\DefaultProfile\assistfs.ini";
+        public static string assistfsConfigPath = appData + @"\FlyffUniverse\DefaultProfile\assistfsconfv2.ini";
         private string[] userArgs;
         FlyffWCForm mainForm = FlyffWCForm.Instance;
 
         // conditions
-        bool profileCheck = false;
-        bool resCheck = false;
-        bool fsCheck = false;
-        bool pixelCheck = false;
-        bool disCheck = false;
-        bool assistCheck = false;
+        bool profileCheck, resCheck, fsCheck, pixelCheck, disCheck, assistCheck, delayBBCheck, leechCheck;
 
         private ArgumentManager()
         {
@@ -31,6 +26,7 @@ namespace HiddenUniverse_WebClient
 
         public void InitializeArguments()
         {
+            profileCheck = resCheck = fsCheck = pixelCheck = disCheck = assistCheck = delayBBCheck = leechCheck = false;
             userArgs = Environment.GetCommandLineArgs();
             foreach (string arg in userArgs)
             {
@@ -40,6 +36,8 @@ namespace HiddenUniverse_WebClient
                 if (!pixelCheck) { PixelLocationArg(arg); }
                 if (!disCheck) { DisplaySelectionArg(arg); }
                 if (!assistCheck) { AssistModeArg(arg); }
+                if (!delayBBCheck) { DelayBetweenBuffsArg(arg); }
+                if (!leechCheck) { LeechModeArg(arg); }
             }
         }
         private void ProfileArg(string arg)
@@ -103,8 +101,28 @@ namespace HiddenUniverse_WebClient
             if (gc != null)
             {
                 mainForm.EnableAssistMode();
-                assistfsConfigPath = profilePath + @"\assistfsconf.ini";
+                assistfsConfigPath = profilePath + @"\assistfsconfv2.ini";
                 assistCheck = true;
+            }
+        }
+        private void DelayBetweenBuffsArg(string arg)
+        {
+            string rg = @"/delaybb=([0-9]{3,5})";
+            GroupCollection gc = RegexCheck.Test(arg, rg);
+            if (gc != null)
+            {
+                mainForm.delaybb = Int32.Parse(gc[1].Value);
+                delayBBCheck = true;
+            }
+        }
+        private void LeechModeArg(string arg)
+        {
+            string rg = @"(/leech)";
+            GroupCollection gc = RegexCheck.Test(arg, rg);
+            if (gc != null)
+            {
+                mainForm.EnableAutoFollow();
+                leechCheck = true;
             }
         }
     }

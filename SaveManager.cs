@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.Generic;
 
 namespace HiddenUniverse_WebClient
 {
@@ -14,22 +15,14 @@ namespace HiddenUniverse_WebClient
 
         }
         public static SaveManager Instance { get { if (_instance == null) { _instance = new SaveManager(); } return _instance; } }
-        public void SaveConfiguration(int buffListCount, CheckedListBox autoBuffList,  int numberKeyCodesLength)
+        public void SaveConfiguration()
         {
-            int configItems = buffListCount + 1;
-            string[] config = new string[configItems];
-            int lst = 0;
             int autoHealSelectedIndex = mainForm.autoHealSelectedIndex;
-            config[lst] = autoHealSelectedIndex.ToString();
-            lst++;
-            for (int i = 0; i < numberKeyCodesLength; i++)
-            {
-                if (autoBuffList.GetItemChecked(i))
-                {
-                    config[lst] = i.ToString();
-                    lst++;
-                }
-            }
+            List<string> buffTree = mainForm.selectedBuffSlots;
+            List<string> config = new List<string>();
+            int configItems = buffTree.Count + 1;
+            config.Add(autoHealSelectedIndex.ToString());
+            foreach (string b in buffTree) { config.Add(b); }
             File.WriteAllLines(ArgumentManager.assistfsConfigPath, config);
         }
 
@@ -38,17 +31,11 @@ namespace HiddenUniverse_WebClient
             if (File.Exists(ArgumentManager.assistfsConfigPath))
             {
                 string[] config = File.ReadAllLines(ArgumentManager.assistfsConfigPath);
-                int autoHealSelectedIndex;
-                Int32.TryParse(config[0], out autoHealSelectedIndex);
+                int autoHealSelectedIndex = Int32.Parse(config[0]);
                 mainForm.autoHealSelectedIndex = autoHealSelectedIndex;
-                for (int i = 1; i < config.Length; i++)
-                {
-                    int c;
-                    Int32.TryParse(config[i], out c);
-                    mainForm.autoBuffListCheckItem(c);
-                }
-            }
+                mainForm.autoBuffTreeCheckItem(config); 
 
+            }
         }
     }
 }
