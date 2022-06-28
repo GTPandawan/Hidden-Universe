@@ -53,9 +53,10 @@ namespace HiddenUniverse_WebClient
             assistMode = true;
             autoHealBox.Enabled = true;
             autoHealBox.Visible = true;
+            autoBuffBox.Visible = true;
+            autoBuffTime.Visible = true;
             autoBuffTree.Visible = true;
             autoBuffTree.Enabled = true;
-            autoBuffBox.Visible = true;
             EnableAutoFollow();
         }
         public void InitializeChromium()

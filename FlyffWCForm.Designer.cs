@@ -292,6 +292,7 @@
             this.autoBuffTime.Name = "autoBuffTime";
             this.autoBuffTime.Size = new System.Drawing.Size(193, 47);
             this.autoBuffTime.TabIndex = 6;
+            this.autoBuffTime.Visible = false;
             this.autoBuffTime.SelectedIndexChanged += new System.EventHandler(this.autoBuffTime_SelectedIndexChanged);
             // 
             // FlyffWCForm

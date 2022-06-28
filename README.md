@@ -1,6 +1,6 @@
 # Hidden Universe Web Client
 
-Flyff Universe Web Client allows you to play Flyff Universe natively
+Hidden Universe Web Client allows you to play Flyff Universe natively
 with dedicated client, QoL Improvments and Automation.
 **This WebClient is against Flyff Universe ToS. Use at your own risk!**
 **Built and Shared for educational porpuses only.**
@@ -8,7 +8,7 @@ with dedicated client, QoL Improvments and Automation.
 
 - Better FPS & Latency
 - Flexible for your needs
-- Ease of use for multipe characters in parallel
+- Ease of use for multiple characters in parallel
 - Additional Quality of Life features
 - Bots
 
