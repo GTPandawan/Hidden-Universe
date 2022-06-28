@@ -98,6 +98,7 @@
             this.autoFollowBox = new System.Windows.Forms.CheckBox();
             this.autoBuffTree = new System.Windows.Forms.TreeView();
             this.autoBuffTime = new System.Windows.Forms.ComboBox();
+            this.autoBuffText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // autoHealBox
@@ -293,13 +294,34 @@
             this.autoBuffTime.Size = new System.Drawing.Size(193, 47);
             this.autoBuffTime.TabIndex = 6;
             this.autoBuffTime.Visible = false;
+            this.autoBuffTime.DropDown += new System.EventHandler(this.autoBuffTime_DropDown);
             this.autoBuffTime.SelectedIndexChanged += new System.EventHandler(this.autoBuffTime_SelectedIndexChanged);
+            this.autoBuffTime.DropDownClosed += new System.EventHandler(this.autoBuffTime_DropDownClosed);
+            // 
+            // autoBuffText
+            // 
+            this.autoBuffText.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.autoBuffText.BackColor = System.Drawing.Color.Black;
+            this.autoBuffText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.autoBuffText.Enabled = false;
+            this.autoBuffText.Font = new System.Drawing.Font("Franklin Gothic Medium", 14.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autoBuffText.ForeColor = System.Drawing.Color.Firebrick;
+            this.autoBuffText.Location = new System.Drawing.Point(1547, 301);
+            this.autoBuffText.Name = "autoBuffText";
+            this.autoBuffText.ReadOnly = true;
+            this.autoBuffText.Size = new System.Drawing.Size(138, 38);
+            this.autoBuffText.TabIndex = 7;
+            this.autoBuffText.Text = "1200.0 seconds";
+            this.autoBuffText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.autoBuffText.Visible = false;
+            this.autoBuffText.WordWrap = false;
             // 
             // FlyffWCForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(1896, 1016);
+            this.Controls.Add(this.autoBuffText);
             this.Controls.Add(this.autoBuffTime);
             this.Controls.Add(this.autoBuffTree);
             this.Controls.Add(this.autoFollowBox);
@@ -320,13 +342,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.CheckBox autoHealBox;
         private System.Windows.Forms.ComboBox autoHealTime;
         private System.Windows.Forms.CheckBox autoBuffBox;
         private System.Windows.Forms.CheckBox autoFollowBox;
         private System.Windows.Forms.TreeView autoBuffTree;
         private System.Windows.Forms.ComboBox autoBuffTime;
+        public System.Windows.Forms.TextBox autoBuffText;
+        public System.Windows.Forms.CheckBox autoHealBox;
     }
 }
 

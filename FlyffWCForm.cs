@@ -10,12 +10,13 @@ using AutoUpdaterDotNET;
 
 namespace HiddenUniverse_WebClient
 {
-    public partial class FlyffWCForm : Form
+    public partial class FlyffWCForm : Form 
     {
         // References
         private static FlyffWCForm _instance;
         public ChromiumWebBrowser chromeBrowser;
-        private Thread buffThread;
+        public Thread buffThread;
+        public bool healWasEnabled;
         private System.Windows.Forms.Timer waitForGameExitTimer;
         private AutoHealTimer autoHealerTimer = new AutoHealTimer();
         private AutoFollowTimer autoFollowTimer = new AutoFollowTimer();
@@ -118,6 +119,10 @@ namespace HiddenUniverse_WebClient
         {
             if (autoHealerTimer.Timer != null && !autoHealerTimer.Timer.Enabled) { autoHealerTimer.Timer.Start(); }
         }
+        public void CheckHealBox()//used to enable it after buff ends
+        {
+            autoHealBox.CheckState = CheckState.Checked;
+        }
 
         // Auto Buff Methods
         private void autoBuffBox_Click(object sender, EventArgs e)
@@ -186,12 +191,16 @@ namespace HiddenUniverse_WebClient
             {
                 autoHealerTimer.Timer.Stop();
                 autoHealBox.Checked = false;
+                healWasEnabled = true; ;
             }
+            else { healWasEnabled = false; }
             if (buffThread != null && buffThread.IsAlive) { buffThread.Abort(); }
             else
             {
                 buffThread = new Thread(AutoBuff);
                 buffThread.Start();
+                if (autoBuffTimer.ThreadTimer == null) { autoBuffTimer.InitThreadTimer(); }
+                else { autoBuffTimer.ThreadTimer.Start(); }
             }
         }
         private void AutoBuff()
@@ -216,6 +225,8 @@ namespace HiddenUniverse_WebClient
                 if (autoBuffTimer.Timer == null) { autoBuffTimer.autoBuffInterval = interval * 60000; autoBuffTimer.InitTimer(); }
                 else if (autoBuffTimer.Timer != null && autoBuffTimer.Timer.Enabled) { autoBuffTimer.Timer.Interval = autoBuffTimer.autoBuffInterval = interval * 60000; }
                 else if (autoBuffTimer.Timer != null && !autoBuffTimer.Timer.Enabled) { autoBuffTimer.Timer.Interval = autoBuffTimer.autoBuffInterval = interval * 60000; autoBuffTimer.Timer.Start(); }
+                if (autoBuffTimer.CountdownTimer == null) { autoBuffText.Enabled = true; autoBuffText.Visible = true; autoBuffTimer.InitCountdown(); } // starts countdown
+                else if (autoBuffTimer.CountdownTimer != null && !autoBuffTimer.CountdownTimer.Enabled) { autoBuffTimer.cdelta = 0; autoBuffText.Enabled = true; autoBuffText.Visible = true; autoBuffTimer.CountdownTimer.Start(); } // resume countdown
             }
             else
             {
@@ -245,6 +256,15 @@ namespace HiddenUniverse_WebClient
             var split = str.Split("x".ToCharArray());
             fKeyIndex = Int32.Parse(split[0]);
             nKeyIndex = Int32.Parse(split[1]);
+        }
+        private void autoBuffTime_DropDown(object sender, EventArgs e)
+        {
+            if (autoHealerTimer.Timer != null && autoHealerTimer.Timer.Enabled) { autoHealerTimer.Timer.Stop(); }
+        }
+
+        private void autoBuffTime_DropDownClosed(object sender, EventArgs e)
+        {
+            if (autoHealerTimer.Timer != null && !autoHealerTimer.Timer.Enabled && autoHealTime.Enabled) { autoHealerTimer.Timer.Start(); }
         }
 
         // Auto Follow Methods
