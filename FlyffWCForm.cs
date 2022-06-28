@@ -19,12 +19,13 @@ namespace HiddenUniverse_WebClient
         private System.Windows.Forms.Timer waitForGameExitTimer;
         private AutoHealTimer autoHealerTimer = new AutoHealTimer();
         private AutoFollowTimer autoFollowTimer = new AutoFollowTimer();
+        private AutoBuffTimer autoBuffTimer = new AutoBuffTimer();
 
         // Configuration Variables
         bool assistMode = false;
         public int autoHealSelectedIndex = -1;
         int[] numberKeyCodes = { 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39 };
-        int[] functionKeyCodes = { 0x70, 0x71, 0x72 };
+        int[] functionKeyCodes = { 0x70, 0x71, 0x72 };        
         public int delaybb = 1500;
         public List<string> selectedBuffSlots { get; set; }
 
@@ -83,8 +84,9 @@ namespace HiddenUniverse_WebClient
                 autoHealTime.Visible = true;
                 autoHealTime.BackColor = Color.PeachPuff;
                 if (autoHealSelectedIndex == -1) { autoHealTime.SelectedIndex = 2; } else { autoHealTime.SelectedIndex = autoHealSelectedIndex; }
-                if (autoHealerTimer.Timer == null || autoHealerTimer.Timer.Enabled) { autoHealerTimer.InitTimer(); }
-                else { autoHealerTimer.Timer.Start(); }
+                autoHealerTimer.autoHealInterval = autoHealSelectedIndex + 1;
+                if (autoHealerTimer.Timer == null) { autoHealerTimer.InitTimer(); }
+                else if (autoHealerTimer.Timer != null && !autoHealerTimer.Timer.Enabled) { autoHealerTimer.Timer.Interval = autoHealerTimer.autoHealInterval * 1000; autoHealerTimer.Timer.Start(); }
             }
             else { autoHealBox.BackColor = Color.Gray;
                 autoHealTime.Enabled = false;
@@ -96,10 +98,13 @@ namespace HiddenUniverse_WebClient
         private void autoHealTime_SelectedIndexChanged(object sender, EventArgs e)
         {
             autoHealSelectedIndex = autoHealTime.SelectedIndex;
-            autoHealerTimer.autoHealInterval = autoHealTime.SelectedIndex + 1;
-            if (autoHealerTimer.Timer != null)
+            autoHealerTimer.autoHealInterval = autoHealSelectedIndex + 1;
+            if (autoHealerTimer.Timer != null && autoHealerTimer.Timer.Enabled)
             {
-                autoHealerTimer.Timer.Stop();
+                autoHealerTimer.Timer.Interval = autoHealerTimer.autoHealInterval * 1000; // in miliseconds
+            }
+            else if (autoHealerTimer.Timer != null && !autoHealerTimer.Timer.Enabled)
+            {
                 autoHealerTimer.Timer.Interval = autoHealerTimer.autoHealInterval * 1000; // in miliseconds
                 autoHealerTimer.Timer.Start();
             }
@@ -116,17 +121,7 @@ namespace HiddenUniverse_WebClient
         // Auto Buff Methods
         private void autoBuffBox_Click(object sender, EventArgs e)
         {
-            if (autoHealerTimer.Timer != null && autoHealerTimer.Timer.Enabled)
-            {
-                autoHealerTimer.Timer.Stop();
-                autoHealBox.Checked = false;
-            }
-            if (buffThread != null && buffThread.IsAlive) { buffThread.Abort(); }
-            else {
-                buffThread = new Thread(AutoBuff);
-                buffThread.Start();
-            }
-            
+            initiateBuff();
         }
         private void autoBuffTree_AfterCheck(object sender, TreeViewEventArgs e)
         {
@@ -168,23 +163,40 @@ namespace HiddenUniverse_WebClient
                 string cn = e.Node.Parent.Index.ToString() + "x" + e.Node.Index;
                 selectedBuffSlots.Remove(cn);
             }
+            selectedBuffSlots.Sort(); // Sorts the slots by placement and not by user selection order.
             if (selectedBuffSlots.Count > 0 && !autoBuffBox.Enabled) // Enable Buffbox
             {
                 autoBuffBox.Enabled = true;
                 autoBuffBox.BackColor = Color.PeachPuff;
+                autoBuffTime.Enabled = true;
+                autoBuffTime.SelectedIndex = 0;
             }
             else if (selectedBuffSlots.Count <= 0 && autoBuffBox.Enabled) // Disable Boffbox
             {
                 autoBuffBox.Enabled = false;
                 autoBuffBox.BackColor = Color.Gray;
+                autoBuffTime.Enabled = false;
+                autoBuffTime.SelectedIndex = 0;
+            }
+        }
+        public void initiateBuff()
+        {
+            if (autoHealerTimer.Timer != null && autoHealerTimer.Timer.Enabled)
+            {
+                autoHealerTimer.Timer.Stop();
+                autoHealBox.Checked = false;
+            }
+            if (buffThread != null && buffThread.IsAlive) { buffThread.Abort(); }
+            else
+            {
+                buffThread = new Thread(AutoBuff);
+                buffThread.Start();
             }
         }
         private void AutoBuff()
         {
-
             Thread.Sleep(1500); // wait before buff sequence (in case another action is in progress)
-
-            foreach (string str in selectedBuffSlots)
+            foreach (string str in selectedBuffSlots.ToArray())
             {
                 int fKeyIndex, nKeyIndex;
                 AutoBuffStringConvert(str,out fKeyIndex,out nKeyIndex);
@@ -192,6 +204,21 @@ namespace HiddenUniverse_WebClient
                 Thread.Sleep(75); // delay between switching hotbar & sending a buff command
                 sendKeyCodeToBrowser(numberKeyCodes[nKeyIndex]);
                 Thread.Sleep(delaybb);
+            }
+        }
+        private void autoBuffTime_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GroupCollection gc = RegexCheck.Test(autoBuffTime.GetItemText(autoBuffTime.SelectedItem), "Every ([0-9]{1,2}) minutes");
+            if (gc != null)
+            {
+                var interval = Int32.Parse(gc[1].Value);
+                if (autoBuffTimer.Timer == null) { autoBuffTimer.autoBuffInterval = interval * 60000; autoBuffTimer.InitTimer(); }
+                else if (autoBuffTimer.Timer != null && autoBuffTimer.Timer.Enabled) { autoBuffTimer.Timer.Interval = autoBuffTimer.autoBuffInterval = interval * 60000; }
+                else if (autoBuffTimer.Timer != null && !autoBuffTimer.Timer.Enabled) { autoBuffTimer.Timer.Interval = autoBuffTimer.autoBuffInterval = interval * 60000; autoBuffTimer.Timer.Start(); }
+            }
+            else
+            {
+                if (autoBuffTimer.Timer != null && autoBuffTimer.Timer.Enabled) { autoBuffTimer.Timer.Stop(); }
             }
         }
         public void autoBuffTreeCheckItem (string[] config)

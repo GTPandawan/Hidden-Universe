@@ -97,6 +97,7 @@
             this.autoBuffBox = new System.Windows.Forms.CheckBox();
             this.autoFollowBox = new System.Windows.Forms.CheckBox();
             this.autoBuffTree = new System.Windows.Forms.TreeView();
+            this.autoBuffTime = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // autoHealBox
@@ -172,7 +173,7 @@
             this.autoFollowBox.Enabled = false;
             this.autoFollowBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.autoFollowBox.Font = new System.Drawing.Font("Franklin Gothic Medium", 21.85714F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.autoFollowBox.Location = new System.Drawing.Point(1521, 824);
+            this.autoFollowBox.Location = new System.Drawing.Point(1521, 877);
             this.autoFollowBox.Name = "autoFollowBox";
             this.autoFollowBox.Size = new System.Drawing.Size(363, 75);
             this.autoFollowBox.TabIndex = 4;
@@ -191,7 +192,7 @@
             this.autoBuffTree.Font = new System.Drawing.Font("Franklin Gothic Medium", 20.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autoBuffTree.ForeColor = System.Drawing.Color.Black;
             this.autoBuffTree.FullRowSelect = true;
-            this.autoBuffTree.Location = new System.Drawing.Point(1656, 295);
+            this.autoBuffTree.Location = new System.Drawing.Point(1656, 348);
             this.autoBuffTree.Name = "autoBuffTree";
             treeNode1.Name = "Slot0";
             treeNode1.Text = "Slot 0";
@@ -269,11 +270,36 @@
             this.autoBuffTree.Visible = false;
             this.autoBuffTree.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.autoBuffTree_AfterCheck);
             // 
+            // autoBuffTime
+            // 
+            this.autoBuffTime.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.autoBuffTime.BackColor = System.Drawing.Color.Gray;
+            this.autoBuffTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.autoBuffTime.Enabled = false;
+            this.autoBuffTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autoBuffTime.FormattingEnabled = true;
+            this.autoBuffTime.Items.AddRange(new object[] {
+            "Manual Buff",
+            "Every 3 minutes",
+            "Every 5 minutes",
+            "Every 7 minutes",
+            "Every 10 minutes",
+            "Every 12 minutes",
+            "Every 15 minutes",
+            "Every 17 minutes",
+            "Every 20 minutes"});
+            this.autoBuffTime.Location = new System.Drawing.Point(1691, 295);
+            this.autoBuffTime.Name = "autoBuffTime";
+            this.autoBuffTime.Size = new System.Drawing.Size(193, 47);
+            this.autoBuffTime.TabIndex = 6;
+            this.autoBuffTime.SelectedIndexChanged += new System.EventHandler(this.autoBuffTime_SelectedIndexChanged);
+            // 
             // FlyffWCForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(1896, 1016);
+            this.Controls.Add(this.autoBuffTime);
             this.Controls.Add(this.autoBuffTree);
             this.Controls.Add(this.autoFollowBox);
             this.Controls.Add(this.autoBuffBox);
@@ -299,6 +325,7 @@
         private System.Windows.Forms.CheckBox autoBuffBox;
         private System.Windows.Forms.CheckBox autoFollowBox;
         private System.Windows.Forms.TreeView autoBuffTree;
+        private System.Windows.Forms.ComboBox autoBuffTime;
     }
 }
 

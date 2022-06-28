@@ -27,10 +27,12 @@ Currently available using assistfs:
 - **Auto Heal** - Enabling Auto Heal will constantly heal the target selected using the Action Slot.
     - Heal skill must be in the Action Slot.
     - Action Slot keybind must be configured with C key (Default).
-- **Auto Buff** - Select the required Hotbar Slots and press Auto Buff to use them one after another allowing you to buff with a single click!
-    -  The required Task Bar ID must be selected.
-    -  Make sure the required buffs are on the same Task Bar Slots selected.
+- **Auto Buff** - Select the required Task Bars ID & Taskbar Slots and press Auto Buff to use them one after another allowing you to buff with a single click!
+    -  Task Bars 1 - 3 must be configured with Keybinds F1-F3 (Default).
+	-  Task Bar Slots must be configured with Keybinds 0-9 (Default).
     -  Since this is sequencial, please don't move with target character since you can miss out some buffs.
+	-  You may select to Auto-Buff every certain amount of time OR manually by pressing the button
+	-  Each time Auto Buff is initiated, Auto Heal stops.
 - **Auto Follow** - Sometimes autofollow in Flyff breaks and you find your support not following you anymore. Auto Follow make sure each 5 seconds that you're following the selected target!
     - Follow Key must be configured for Z key (default).
 	

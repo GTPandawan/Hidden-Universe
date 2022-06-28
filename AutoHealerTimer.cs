@@ -19,7 +19,6 @@ namespace HiddenUniverse_WebClient
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            timer.Interval = autoHealInterval * 1000;
             FlyffWCForm.Instance.sendKeyCodeToBrowser(0x43);
         }
     }

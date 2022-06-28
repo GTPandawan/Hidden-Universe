@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <item>
-  <version>1.0.1.1</version>
-  <url>https://github.com/HiddenUniverse/Hidden-Universe/releases/download/v1.0.1.1/HiddenUniverseWebClient_v1.0.1.1.zip</url>
+  <version>1.0.2.0</version>
+  <url>https://github.com/HiddenUniverse/Hidden-Universe/releases/download/v1.0.2.0/HiddenUniverseWebClient_v1.0.2.0.zip</url>
   <changelog>https://github.com/HiddenUniverse/Hidden-Universe/releases</changelog>
   <mandatory>false</mandatory>
 </item>
