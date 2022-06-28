@@ -280,6 +280,7 @@
             this.autoBuffTime.FormattingEnabled = true;
             this.autoBuffTime.Items.AddRange(new object[] {
             "Manual Buff",
+            "Every 1 minutes",
             "Every 3 minutes",
             "Every 5 minutes",
             "Every 7 minutes",
@@ -293,7 +294,9 @@
             this.autoBuffTime.Size = new System.Drawing.Size(193, 47);
             this.autoBuffTime.TabIndex = 6;
             this.autoBuffTime.Visible = false;
+            this.autoBuffTime.DropDown += new System.EventHandler(this.autoBuffTime_DropDown);
             this.autoBuffTime.SelectedIndexChanged += new System.EventHandler(this.autoBuffTime_SelectedIndexChanged);
+            this.autoBuffTime.DropDownClosed += new System.EventHandler(this.autoBuffTime_DropDownClosed);
             // 
             // FlyffWCForm
             // 
@@ -320,13 +323,12 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.CheckBox autoHealBox;
         private System.Windows.Forms.ComboBox autoHealTime;
         private System.Windows.Forms.CheckBox autoBuffBox;
         private System.Windows.Forms.CheckBox autoFollowBox;
         private System.Windows.Forms.TreeView autoBuffTree;
         private System.Windows.Forms.ComboBox autoBuffTime;
+        public System.Windows.Forms.CheckBox autoHealBox;
     }
 }
 

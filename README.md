@@ -32,7 +32,7 @@ Currently available using assistfs:
 	-  Task Bar Slots must be configured with Keybinds 0-9 (Default).
     -  Since this is sequencial, please don't move with target character since you can miss out some buffs.
 	-  You may select to Auto-Buff every certain amount of time OR manually by pressing the button
-	-  Each time Auto Buff is initiated, Auto Heal stops.
+	-  Each time Auto Buff is initiated, Auto Heal stops if enabled - until auto buff is finished.
 - **Auto Follow** - Sometimes autofollow in Flyff breaks and you find your support not following you anymore. Auto Follow make sure each 5 seconds that you're following the selected target!
     - Follow Key must be configured for Z key (default).
 	

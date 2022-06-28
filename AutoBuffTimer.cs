@@ -10,7 +10,11 @@ namespace HiddenUniverse_WebClient
     {
         private System.Windows.Forms.Timer timer { get; set; }
         public System.Windows.Forms.Timer Timer { get { return timer; } }
+        private System.Windows.Forms.Timer threadTimer { get; set; }
+        public System.Windows.Forms.Timer ThreadTimer { get { return threadTimer; } }
+
         public int autoBuffInterval = 0;
+        
         public void InitTimer()
         {
             if (autoBuffInterval > 0)
@@ -24,6 +28,23 @@ namespace HiddenUniverse_WebClient
         private void Timer_Tick(object sender, EventArgs e)
         {
             FlyffWCForm.Instance.initiateBuff();
+        }
+        public void InitThreadTimer()
+        {
+            threadTimer = new System.Windows.Forms.Timer();
+            threadTimer.Tick += new EventHandler(ThreadTimer_Tick);
+            threadTimer.Interval = 1000; // in miliseconds
+            threadTimer.Start();
+        }
+        private void ThreadTimer_Tick(object sender, EventArgs e)
+        {
+            if (!FlyffWCForm.Instance.buffThread.IsAlive && FlyffWCForm.Instance.healWasEnabled)
+            {
+                FlyffWCForm.Instance.autoHealBox.Checked = true;
+                threadTimer.Stop();
+                return;
+            }
+            else if (!FlyffWCForm.Instance.buffThread.IsAlive) { threadTimer.Stop(); }
         }
     }
 }
