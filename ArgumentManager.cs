@@ -78,8 +78,8 @@ namespace HiddenUniverse_WebClient
                 int x = 0, y = 0;
                 Int32.TryParse(gc[1].Value, out x);
                 Int32.TryParse(gc[2].Value, out y);
-                mainForm.Location = new Point(x, y);
-                pixelCheck = true;
+                mainForm.Left = x;
+                mainForm.Top = y;
             }
         }
         private void DisplaySelectionArg(string arg)
@@ -90,7 +90,12 @@ namespace HiddenUniverse_WebClient
             {
                 int id;
                 Int32.TryParse(gc[1].Value, out id);
-                if (Screen.AllScreens.Length >= id) { mainForm.Location = Screen.AllScreens[id - 1].WorkingArea.Location; }
+                if (id > 0 && Screen.AllScreens.Length >= id) {
+                    var scaleRatio = Math.Max(Screen.PrimaryScreen.WorkingArea.Width / System.Windows.SystemParameters.PrimaryScreenWidth,
+                    Screen.PrimaryScreen.WorkingArea.Height / System.Windows.SystemParameters.PrimaryScreenHeight);
+                    mainForm.Left = Screen.AllScreens[id - 1].WorkingArea.Left / (int)scaleRatio;
+                    mainForm.Top = Screen.AllScreens[id - 1].WorkingArea.Top / (int)scaleRatio;
+                }
                 disCheck = true;
             }
         }
@@ -111,7 +116,7 @@ namespace HiddenUniverse_WebClient
             GroupCollection gc = RegexCheck.Test(arg, rg);
             if (gc != null)
             {
-                mainForm.delaybb = Int32.Parse(gc[1].Value);
+                AutoBuffTimer.delaybb = Int32.Parse(gc[1].Value);
                 delayBBCheck = true;
             }
         }

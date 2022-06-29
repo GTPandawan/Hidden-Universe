@@ -15,7 +15,6 @@ namespace HiddenUniverse_WebClient
         // References
         private static FlyffWCForm _instance;
         public ChromiumWebBrowser chromeBrowser;
-        public Thread buffThread;
         public bool healWasEnabled;
         private System.Windows.Forms.Timer waitForGameExitTimer;
         private AutoHealTimer autoHealerTimer = new AutoHealTimer();
@@ -24,9 +23,7 @@ namespace HiddenUniverse_WebClient
 
         // Configuration Variables
         bool assistMode = false;
-        public int autoHealSelectedIndex = -1;
-        int[] numberKeyCodes = { 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39 };
-        int[] functionKeyCodes = { 0x70, 0x71, 0x72 };        
+        public int autoHealSelectedIndex = -1;      
         public int delaybb = 1500;
         public List<string> selectedBuffSlots { get; set; }
 
@@ -60,6 +57,11 @@ namespace HiddenUniverse_WebClient
             autoBuffTree.Enabled = true;
             EnableAutoFollow();
         }
+        public void EnableAutoFollow()
+        {
+            autoFollowBox.Visible = true;
+            autoFollowBox.Enabled = true;
+        }
         public void InitializeChromium()
         {
             CefSettings settings = new CefSettings();
@@ -70,7 +72,6 @@ namespace HiddenUniverse_WebClient
             chromeBrowser = new ChromiumWebBrowser("https://universe.flyff.com/play");
             this.Controls.Add(chromeBrowser);
             chromeBrowser.Dock = DockStyle.Fill;
-
         }
         private void Form1_Shown(Object sender, EventArgs e)
         {
@@ -86,7 +87,6 @@ namespace HiddenUniverse_WebClient
                 autoHealTime.Visible = true;
                 autoHealTime.BackColor = Color.PeachPuff;
                 if (autoHealSelectedIndex == -1) { autoHealTime.SelectedIndex = 2; } else { autoHealTime.SelectedIndex = autoHealSelectedIndex; }
-                autoHealerTimer.autoHealInterval = autoHealSelectedIndex + 1;
                 if (autoHealerTimer.Timer == null) { autoHealerTimer.InitTimer(); }
                 else if (autoHealerTimer.Timer != null && !autoHealerTimer.Timer.Enabled) { autoHealerTimer.Timer.Interval = autoHealerTimer.autoHealInterval * 1000; autoHealerTimer.Timer.Start(); }
             }
@@ -99,16 +99,21 @@ namespace HiddenUniverse_WebClient
         }
         private void autoHealTime_SelectedIndexChanged(object sender, EventArgs e)
         {
-            autoHealSelectedIndex = autoHealTime.SelectedIndex;
-            autoHealerTimer.autoHealInterval = autoHealSelectedIndex + 1;
-            if (autoHealerTimer.Timer != null && autoHealerTimer.Timer.Enabled)
+            GroupCollection gc = RegexCheck.Test(autoHealTime.GetItemText(autoHealTime.SelectedItem), "Every ([0-9]{1,2}) seconds");
+            if (gc != null)
             {
-                autoHealerTimer.Timer.Interval = autoHealerTimer.autoHealInterval * 1000; // in miliseconds
-            }
-            else if (autoHealerTimer.Timer != null && !autoHealerTimer.Timer.Enabled)
-            {
-                autoHealerTimer.Timer.Interval = autoHealerTimer.autoHealInterval * 1000; // in miliseconds
-                autoHealerTimer.Timer.Start();
+                var interval = Int32.Parse(gc[1].Value);
+                autoHealSelectedIndex = autoHealTime.SelectedIndex;
+                autoHealerTimer.autoHealInterval = interval;
+                if (autoHealerTimer.Timer != null && autoHealerTimer.Timer.Enabled)
+                {
+                    autoHealerTimer.Timer.Interval = autoHealerTimer.autoHealInterval * 1000; // in miliseconds
+                }
+                else if (autoHealerTimer.Timer != null && !autoHealerTimer.Timer.Enabled)
+                {
+                    autoHealerTimer.Timer.Interval = autoHealerTimer.autoHealInterval * 1000; // in miliseconds
+                    autoHealerTimer.Timer.Start();
+                }
             }
         }
         private void autoHealTime_DropDown(object sender, EventArgs e)
@@ -194,27 +199,9 @@ namespace HiddenUniverse_WebClient
                 healWasEnabled = true;
             }
             else { healWasEnabled = false; }
-            if (buffThread != null && buffThread.IsAlive) { buffThread.Abort(); }
-            else
-            {
-                buffThread = new Thread(AutoBuff);
-                buffThread.Start();
-                if (autoBuffTimer.ThreadTimer == null) { autoBuffTimer.InitThreadTimer(); }
-                else { autoBuffTimer.ThreadTimer.Start(); }
-            }
-        }
-        private void AutoBuff()
-        {
-            Thread.Sleep(1500); // wait before buff sequence (in case another action is in progress)
-            foreach (string str in selectedBuffSlots.ToArray())
-            {
-                int fKeyIndex, nKeyIndex;
-                AutoBuffStringConvert(str,out fKeyIndex,out nKeyIndex);
-                sendKeyCodeToBrowser(functionKeyCodes[fKeyIndex]);
-                Thread.Sleep(75); // delay between switching hotbar & sending a buff command
-                sendKeyCodeToBrowser(numberKeyCodes[nKeyIndex]);
-                Thread.Sleep(delaybb);
-            }
+            if (autoBuffTimer.DelaybbTimer == null) { autoBuffTimer.InitDelaybbTimer(); }
+            else if (autoBuffTimer.DelaybbTimer != null && autoBuffTimer.DelaybbTimer.Enabled) { autoBuffTimer.DelaybbTimer.Stop(); autoBuffTimer.currentBuffIndex = 0; }
+            else if (autoBuffTimer.DelaybbTimer != null && !autoBuffTimer.DelaybbTimer.Enabled) { autoBuffTimer.currentBuffIndex = 0; autoBuffTimer.DelaybbTimer.Start(); }
         }
         private void autoBuffTime_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -222,19 +209,24 @@ namespace HiddenUniverse_WebClient
             if (gc != null)
             {
                 var interval = Int32.Parse(gc[1].Value);
+                autoBuffTimer.cdStart = autoBuffTimer.abStart = DateTime.Now;
                 if (autoBuffTimer.Timer == null) { autoBuffTimer.autoBuffInterval = interval * 60000;
                     autoBuffTimer.InitTimer();
+                    autoBuffTimer.InitCDTimer();
                 }
                 else if (autoBuffTimer.Timer != null && autoBuffTimer.Timer.Enabled) { 
-                    autoBuffTimer.Timer.Interval = autoBuffTimer.autoBuffInterval = interval * 60000; }
+                    autoBuffTimer.autoBuffInterval = interval * 60000; }
                 else if (autoBuffTimer.Timer != null && !autoBuffTimer.Timer.Enabled) { 
-                    autoBuffTimer.Timer.Interval = autoBuffTimer.autoBuffInterval = interval * 60000; 
+                    autoBuffTimer.autoBuffInterval = interval * 60000; 
                     autoBuffTimer.Timer.Start();
+                    autoBuffTimer.CDTimer.Start();
                 }
+                autoBuffCD.Visible = true;
             }
             else
             {
-                if (autoBuffTimer.Timer != null && autoBuffTimer.Timer.Enabled) { autoBuffTimer.Timer.Stop(); }
+                if (autoBuffTimer.Timer != null && autoBuffTimer.Timer.Enabled) { autoBuffTimer.Timer.Stop(); autoBuffTimer.CDTimer.Stop();  }
+                autoBuffCD.Visible = false;
             }
         }
         public void autoBuffTreeCheckItem (string[] config)
@@ -255,7 +247,7 @@ namespace HiddenUniverse_WebClient
                 if (parentCheck) { autoBuffTree.Nodes[i].Checked = true; }
             }
         }
-        private void AutoBuffStringConvert(string str, out int fKeyIndex, out int nKeyIndex)
+        public void AutoBuffStringConvert(string str, out int fKeyIndex, out int nKeyIndex)
         {
             var split = str.Split("x".ToCharArray());
             fKeyIndex = Int32.Parse(split[0]);
@@ -290,15 +282,10 @@ namespace HiddenUniverse_WebClient
             }
         }
 
-        // Leech Mode / Assist Mode
-        public void EnableAutoFollow()
-        {
-            autoFollowBox.Visible = true;
-            autoFollowBox.Enabled = true;
-        }
         public void sendKeyCodeToBrowser(int keyCodeHex)
         {
             KeyEvent k = new KeyEvent();
+            k.Modifiers = CefEventFlags.CapsLockOn; // added to allow sending keyboard commands even if selected language is not English
             k.WindowsKeyCode = keyCodeHex;
             k.FocusOnEditableField = false;
             k.IsSystemKey = false;
@@ -314,7 +301,6 @@ namespace HiddenUniverse_WebClient
             AutoUpdater.Synchronous = true;
             AutoUpdater.Mandatory = true;
             AutoUpdater.AppTitle = "Hidden Universe WebClient";
-            // Currently not working since this is a private repo and it requires authentication\token
             AutoUpdater.Start("https://raw.githubusercontent.com/HiddenUniverse/Hidden-Universe/main/version.xml");
         }
         
