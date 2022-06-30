@@ -12,6 +12,7 @@ namespace HiddenUniverse_WebClient
         public static string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         public static string profilePath = appData + @"\FlyffUniverse\DefaultProfile";
         public static string assistfsConfigPath = appData + @"\FlyffUniverse\DefaultProfile\assistfsconfv2.ini";
+        public static string keybindsConfigPath = appData + @"\FlyffUniverse\DefaultProfile\keybinds.ini";
         private string[] userArgs;
         FlyffWCForm mainForm = FlyffWCForm.Instance;
 
@@ -44,7 +45,9 @@ namespace HiddenUniverse_WebClient
         {
             string rg = @"/ProfileName=(.+)";
             GroupCollection gc = RegexCheck.Test(arg, rg);
-            if (gc != null) { profilePath = appData + @"\FlyffUniverse\" + gc[1].Value; profileCheck = true; }
+            if (gc != null) { profilePath = appData + @"\FlyffUniverse\" + gc[1].Value;
+                keybindsConfigPath = profilePath + @"\keybinds.ini";
+                profileCheck = true; }
         }
         private void ResolutionArg(string arg)
         {

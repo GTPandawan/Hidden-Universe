@@ -19,7 +19,7 @@ namespace HiddenUniverse_WebClient
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            FlyffWCForm.Instance.sendKeyCodeToBrowser(0x5A);
+            FlyffWCForm.Instance.sendKeyCodeToBrowser(Keybinds.follow) ;
         }
     }
 }
