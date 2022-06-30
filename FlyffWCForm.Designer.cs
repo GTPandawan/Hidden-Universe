@@ -99,6 +99,7 @@
             this.autoBuffTree = new System.Windows.Forms.TreeView();
             this.autoBuffTime = new System.Windows.Forms.ComboBox();
             this.autoBuffCD = new System.Windows.Forms.TextBox();
+            this.keybindsButt = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // autoHealBox
@@ -113,7 +114,7 @@
             this.autoHealBox.Name = "autoHealBox";
             this.autoHealBox.Size = new System.Drawing.Size(236, 53);
             this.autoHealBox.TabIndex = 0;
-            this.autoHealBox.Text = "Auto Heal (C)";
+            this.autoHealBox.Text = "Auto Heal";
             this.autoHealBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.autoHealBox.UseVisualStyleBackColor = false;
             this.autoHealBox.Visible = false;
@@ -177,7 +178,7 @@
             this.autoFollowBox.Name = "autoFollowBox";
             this.autoFollowBox.Size = new System.Drawing.Size(236, 53);
             this.autoFollowBox.TabIndex = 4;
-            this.autoFollowBox.Text = "Auto Follow (Z)";
+            this.autoFollowBox.Text = "Auto Follow";
             this.autoFollowBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.autoFollowBox.UseVisualStyleBackColor = false;
             this.autoFollowBox.Visible = false;
@@ -316,6 +317,21 @@
             this.autoBuffCD.Visible = false;
             this.autoBuffCD.WordWrap = false;
             // 
+            // keybindsButt
+            // 
+            this.keybindsButt.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.keybindsButt.BackColor = System.Drawing.Color.PeachPuff;
+            this.keybindsButt.Enabled = false;
+            this.keybindsButt.Font = new System.Drawing.Font("Franklin Gothic Medium", 15.85714F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.keybindsButt.Location = new System.Drawing.Point(1648, 884);
+            this.keybindsButt.Name = "keybindsButt";
+            this.keybindsButt.Size = new System.Drawing.Size(236, 51);
+            this.keybindsButt.TabIndex = 8;
+            this.keybindsButt.Text = "Keybinds";
+            this.keybindsButt.UseVisualStyleBackColor = false;
+            this.keybindsButt.Visible = false;
+            this.keybindsButt.Click += new System.EventHandler(this.keybindsButt_Click);
+            // 
             // FlyffWCForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -323,6 +339,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1896, 1016);
+            this.Controls.Add(this.keybindsButt);
             this.Controls.Add(this.autoBuffTree);
             this.Controls.Add(this.autoFollowBox);
             this.Controls.Add(this.autoBuffBox);
@@ -352,6 +369,7 @@
         private System.Windows.Forms.ComboBox autoBuffTime;
         public System.Windows.Forms.CheckBox autoHealBox;
         public System.Windows.Forms.TextBox autoBuffCD;
+        private System.Windows.Forms.Button keybindsButt;
     }
 }
 

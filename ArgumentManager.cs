@@ -12,6 +12,7 @@ namespace HiddenUniverse_WebClient
         public static string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         public static string profilePath = appData + @"\FlyffUniverse\DefaultProfile";
         public static string assistfsConfigPath = appData + @"\FlyffUniverse\DefaultProfile\assistfsconfv2.ini";
+        public static string keybindsConfigPath = appData + @"\FlyffUniverse\DefaultProfile\keybinds.ini";
         private string[] userArgs;
         FlyffWCForm mainForm = FlyffWCForm.Instance;
 
@@ -42,9 +43,11 @@ namespace HiddenUniverse_WebClient
         }
         private void ProfileArg(string arg)
         {
-            string rg = @"/ProfileName=(.+)";
+            string rg = @" / ProfileName=(.+)";
             GroupCollection gc = RegexCheck.Test(arg, rg);
-            if (gc != null) { profilePath = appData + @"\FlyffUniverse\" + gc[1].Value; profileCheck = true; }
+            if (gc != null) { profilePath = appData + @"\FlyffUniverse\" + gc[1].Value;
+                keybindsConfigPath = profilePath + @"\keybinds.ini";
+                profileCheck = true; }
         }
         private void ResolutionArg(string arg)
         {
@@ -108,6 +111,7 @@ namespace HiddenUniverse_WebClient
                 mainForm.EnableAssistMode();
                 assistfsConfigPath = profilePath + @"\assistfsconfv2.ini";
                 assistCheck = true;
+                if (!SaveManager.Instance.keybindsLoaded) { SaveManager.Instance.LoadKeybindsConfig(); }
             }
         }
         private void DelayBetweenBuffsArg(string arg)
@@ -128,6 +132,7 @@ namespace HiddenUniverse_WebClient
             {
                 mainForm.EnableAutoFollow();
                 leechCheck = true;
+                if (!SaveManager.Instance.keybindsLoaded) { SaveManager.Instance.LoadKeybindsConfig(); }
             }
         }
     }

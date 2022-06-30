@@ -18,8 +18,6 @@ namespace HiddenUniverse_WebClient
         public int autoBuffInterval = 0;
         public int currentBuffIndex = 0;
         private string[] selectedBuffsSlots;
-        int[] numberKeyCodes = { 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39 };
-        int[] functionKeyCodes = { 0x70, 0x71, 0x72 };
         public static int delaybb = 1750;
         public DateTime cdStart, abStart;
 
@@ -53,9 +51,9 @@ namespace HiddenUniverse_WebClient
             if (currentBuffIndex == 0) { selectedBuffsSlots = FlyffWCForm.Instance.selectedBuffSlots.ToArray(); }
             int fKeyIndex, nKeyIndex;
             FlyffWCForm.Instance.AutoBuffStringConvert(selectedBuffsSlots[currentBuffIndex], out fKeyIndex, out nKeyIndex);
-            FlyffWCForm.Instance.sendKeyCodeToBrowser(functionKeyCodes[fKeyIndex]);
+            FlyffWCForm.Instance.sendKeyCodeToBrowser(Keybinds.GetTaskbars()[fKeyIndex]);
             Task.Delay(75);// delay between switching hotbar & sending a buff command
-            FlyffWCForm.Instance.sendKeyCodeToBrowser(numberKeyCodes[nKeyIndex]);
+            FlyffWCForm.Instance.sendKeyCodeToBrowser(Keybinds.GetSlots()[nKeyIndex]);
             currentBuffIndex++;
             if (currentBuffIndex == selectedBuffsSlots.Length && FlyffWCForm.Instance.healWasEnabled)
             {

@@ -9,13 +9,14 @@ namespace HiddenUniverse_WebClient
     {
         private static SaveManager _instance;
         FlyffWCForm mainForm = FlyffWCForm.Instance;
+        internal bool keybindsLoaded = false;
 
         private SaveManager()
         {
 
         }
         public static SaveManager Instance { get { if (_instance == null) { _instance = new SaveManager(); } return _instance; } }
-        public void SaveConfiguration()
+        public void SaveAssistfsConfig()
         {
             int autoHealSelectedIndex = mainForm.autoHealSelectedIndex;
             List<string> buffTree = mainForm.selectedBuffSlots;
@@ -26,7 +27,7 @@ namespace HiddenUniverse_WebClient
             File.WriteAllLines(ArgumentManager.assistfsConfigPath, config);
         }
 
-        public void LoadConfiguration()
+        public void LoadAssistfsConfig()
         {
             if (File.Exists(ArgumentManager.assistfsConfigPath))
             {
@@ -36,6 +37,34 @@ namespace HiddenUniverse_WebClient
                 mainForm.autoBuffTreeCheckItem(config); 
 
             }
+        }
+        public void LoadKeybindsConfig()
+        {
+            keybindsLoaded = true; 
+            if (File.Exists(ArgumentManager.keybindsConfigPath))
+            {
+                string[] config = File.ReadAllLines(ArgumentManager.keybindsConfigPath);
+                List<int> keycodes = new List<int>();
+                foreach (string str in config)
+                {
+                    int p;
+                    if (Int32.TryParse(str, out p))
+                    {
+                        keycodes.Add(p);
+                    }
+                }
+                if (keycodes.Count == Keybinds.GetKeybinds().Length)
+                {
+                    Keybinds.SetKeyBinds(keycodes);
+                }
+            }
+        }
+        public void SaveKeybindsConfig()
+        {
+            var kb = Keybinds.GetKeybinds();
+            List<string> config = new List<string>();
+            foreach (var k in kb) { config.Add(k.ToString()); }
+            File.WriteAllLines(ArgumentManager.keybindsConfigPath, config);
         }
     }
 }

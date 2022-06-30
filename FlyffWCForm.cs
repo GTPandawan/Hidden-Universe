@@ -43,7 +43,7 @@ namespace HiddenUniverse_WebClient
         private void SetArguments()
         {
             ArgumentManager.Instance.InitializeArguments();
-            if (assistMode) { selectedBuffSlots = new List<string>(); SaveManager.Instance.LoadConfiguration(); }
+            if (assistMode) { selectedBuffSlots = new List<string>(); SaveManager.Instance.LoadAssistfsConfig(); }
             InitializeChromium();
         }
         public void EnableAssistMode()
@@ -61,6 +61,7 @@ namespace HiddenUniverse_WebClient
         {
             autoFollowBox.Visible = true;
             autoFollowBox.Enabled = true;
+            keybindsButt.Visible = keybindsButt.Enabled = true;
         }
         public void InitializeChromium()
         {
@@ -304,6 +305,14 @@ namespace HiddenUniverse_WebClient
             AutoUpdater.Start("https://raw.githubusercontent.com/HiddenUniverse/Hidden-Universe/main/version.xml");
         }
         
+        // Keybinds Form
+        private void keybindsButt_Click(object sender, EventArgs e)
+        {
+            var set = new KeybindsForm();
+            set.StartPosition = FormStartPosition.CenterParent;
+            set.ShowDialog(this);
+        }
+
         // Game Exit
         public void InitWaitForGameExitTimer()
         {
@@ -330,7 +339,7 @@ namespace HiddenUniverse_WebClient
                     {
                         var response = t.Result;
                         Match m = r.Match(response);
-                        if (m.Success) { if (assistMode) { SaveManager.Instance.SaveConfiguration(); ; } Application.Exit(); }
+                        if (m.Success) { if (assistMode) { SaveManager.Instance.SaveAssistfsConfig(); ; } Application.Exit(); }
                     }
                 });
             }
@@ -339,6 +348,5 @@ namespace HiddenUniverse_WebClient
         {
             Cef.Shutdown();
         }
-
     }
 }
