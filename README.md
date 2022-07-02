@@ -21,21 +21,48 @@ with dedicated client, QoL Improvments and Automation.
 - Assist Full Support Mode Available!
 
 **Assist Full Support Mode (/assistfs)**
+
 A lot of Flyff players are playing with two characters in perallel for either leech or support using Assist/RM.
 However, it causes a lot of inconvenience having to deal with two different game windows at the same time for each and every action needed.
 Currently available using assistfs:
 - **Auto Heal** - Enabling Auto Heal will constantly heal the target selected using the Action Slot.
     - Heal skill must be in the Action Slot.
-    - Action Slot keybind must be configured with C key (Default).
+    - Action Slot keybind configured with C key by Default but can be reconfigured using the Keybinds button (make sure to configure in game keybinds as well).
 - **Auto Buff** - Select the required Task Bars ID & Taskbar Slots and press Auto Buff to use them one after another allowing you to buff with a single click!
-    -  Task Bars 1 - 3 must be configured with Keybinds F1-F3 (Default).
-	-  Task Bar Slots must be configured with Keybinds 0-9 (Default).
+    -  Task Bars 1 - 3 configured with F1-F3 by default but can be reconfigured using the Keybinds button (make sure to configure in game keybinds as well).
+	-  Task Bar Slots configured with 0-9 by Default but can be reconfigured using the Keybinds button (make sure to configure in game keybinds as well).
     -  Since this is sequencial, please don't move with target character since you can miss out some buffs.
 	-  You may select to Auto-Buff every certain amount of time OR manually by pressing the button
 	-  Each time Auto Buff is initiated, Auto Heal stops if enabled - until auto buff is finished.
 - **Auto Follow** - Sometimes autofollow in Flyff breaks and you find your support not following you anymore. Auto Follow make sure each 5 seconds that you're following the selected target!
-    - Follow Key must be configured for Z key (default).
+    - Follow Key configured with Z key by default but can be reconfigured using the Keybinds button (make sure to configure in game keybinds as well).
 	
+**Auto Use Mode (/autouse)**
+
+A versatile feature to this powerful tool that you can customize freely to your needs!
+
+Auto-Use allows you to configure independent intervals to 3 different functions that you choose.
+
+It can be using food automatically, using mana/refreshers, shout, cheer or whatever is on your mind!
+
+The auto use system is focus independent - meaning you can browse the web, minimize the game or whatever you want and it will still run!
+
+How to configure:
+
+    -  Choose the function you need and put it on your taskbar (it doesn't have to be on the numbered taskbar slots - it can be anywhere you want).
+    
+	   Function is anything you can put in the taskbar, weather if it's food, refreshers, shout, emotes, skills or whatever!
+	   
+	-  It is recommended to lock the taskbar (The little lock on the far left) to make sure nothing getting deleted from the taskbar and making the function not working.
+	
+    -  Enable the function by clicking on one of the different available auto use buttons (A, B & C).
+    
+	-  As soon as you've enabled the function, click with your mouse on the desired location on the taskbar (anywhere in the screen).
+	
+	-  If needed, you can click the "Auto Use Settings" button and change the interval for each function independently! Will apply immediately upon change (Default : 5 minutes).
+	
+	-  In order to change a function, simply click the auto use button to disable it and repeat steps 1 to 4.
+
 **Leech Mode (/leech)**
 In case you need the Auto Follow feature avilable in assistfs mode you can use this flag to enable it!
 
@@ -76,6 +103,7 @@ However it is recommended to set and customize the flags per character needs usi
 | /assistfs | /assistfs | Enable Assist Full Support mode - explained in Features section.
 | /delaybb=<sec-in-ms> | /delaybb=2500 | Set the delay between buffs in milliseconds. Usefull when you need to adjust based on your casting speed. Default is 1500ms (1.5 seconds).
 | /leech | /leech| Enable Leech mode - explained in Features section.
+| /autouse | /autouse| Enable Auto Use mode - explained in Features section.
 
 **Examples:**
 
@@ -83,7 +111,7 @@ Shortcut 1: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient
 
 Shortcut 2: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient.exe" /profilename=FlawkeeRM /pixellocation=3850,-80 /resolution=1600x2000 /assistfs_
 
-Shortcut 3: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient.exe" /profilename=FlawkeeRM2 /resolution=1600x2000 /assistfs /delaybb=800_
+Shortcut 3: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient.exe" /profilename=FlawkeeRM2 /resolution=1600x2000 /assistfs /delaybb=800_ /autouse
 
 ## KNOWN ISSUES
 
@@ -95,8 +123,4 @@ Shortcut 3: _"C:\SomeFolderPath\FlyffUniverse-WebClient\Flyff Universe Webclient
 
 3. AutoBuff/AutoHeal/AutoFollow do not work!
 	**FOLLOW THE INSTRUCTIONS!**
-	Make sure your keyboard is set to English. Currently if the keyboard set to any other language it sends the wrong keystrokes to the client!
-	In addition, make sure your game is configured correctly. The keybinds must be as follows:
-	AutoFollow - Requires the Z key to be configured for Follow (Default).
-	AutoHeal - Requires you to put the Heal Skill in your Action Bar and set the Action Bar Key to C Key (Default).
-	AutoBuff - Required you to configure the Taskbars 1 to 3 keybinds to F1-F3 and your Taskbar Slots to 0-9 (Where 0 is the last one).
+	Make sure your game is configured correctly (in game keybinds) and match Hidden Universe Keybinds.

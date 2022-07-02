@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
 using AutoUpdaterDotNET;
+using System.Threading.Tasks;
 
 namespace HiddenUniverse_WebClient
 {
@@ -20,11 +21,20 @@ namespace HiddenUniverse_WebClient
         private AutoHealTimer autoHealerTimer = new AutoHealTimer();
         private AutoFollowTimer autoFollowTimer = new AutoFollowTimer();
         private AutoBuffTimer autoBuffTimer = new AutoBuffTimer();
+        private AutoUseTimer autoUseTimerA = new AutoUseTimer();
+        private AutoUseTimer autoUseTimerB = new AutoUseTimer();
+        private AutoUseTimer autoUseTimerC = new AutoUseTimer();
 
         // Configuration Variables
         bool assistMode = false;
         public int autoHealSelectedIndex = -1;      
         public int delaybb = 1500;
+
+        // Auto Use Configuration
+        internal Point autoUsePosA, autoUsePosB, autoUsePosC;
+        internal int autoUseIntervalA = 300000;
+        internal int autoUseIntervalB = 300000;
+        internal int autoUseIntervalC = 300000;
         public List<string> selectedBuffSlots { get; set; }
 
         // initiailization
@@ -64,6 +74,10 @@ namespace HiddenUniverse_WebClient
             keybindsButt.Visible = keybindsButt.Enabled = true;
             SaveManager.Instance.LoadKeybindsConfig();
         }
+        public void EnableAutoUse()
+        {
+            autoUseTB.Visible = autoUseTB.Enabled = autoUseA.Visible = autoUseA.Enabled = autoUseB.Visible = autoUseB.Enabled = autoUseC.Visible = autoUseC.Enabled = autoUseButt.Visible = autoUseButt.Enabled = true;
+        }
         public void InitializeChromium()
         {
             CefSettings settings = new CefSettings();
@@ -74,6 +88,10 @@ namespace HiddenUniverse_WebClient
             chromeBrowser = new ChromiumWebBrowser("https://universe.flyff.com/play");
             this.Controls.Add(chromeBrowser);
             chromeBrowser.Dock = DockStyle.Fill;
+            if (autoUseTB.Enabled) {
+                chromeBrowser.JavascriptMessageReceived += chromeBrowser_SetMousePos;
+                chromeBrowser.FrameLoadEnd += chromeBrowser_GetMousePosOnClick;
+            }
         }
         private void Form1_Shown(Object sender, EventArgs e)
         {
@@ -259,7 +277,6 @@ namespace HiddenUniverse_WebClient
         {
             if (autoHealerTimer.Timer != null && autoHealerTimer.Timer.Enabled) { autoHealerTimer.Timer.Stop(); }
         }
-
         private void autoBuffTime_DropDownClosed(object sender, EventArgs e)
         {
             if (autoHealerTimer.Timer != null && !autoHealerTimer.Timer.Enabled && autoHealTime.Enabled) { autoHealerTimer.Timer.Start(); }
@@ -284,6 +301,196 @@ namespace HiddenUniverse_WebClient
             }
         }
 
+        // Auto Use Methods
+        private void autoUseButt_Click(object sender, EventArgs e) // Auto Use Settings Form
+        {
+            var set = new AutoUseForm();
+            set.StartPosition = FormStartPosition.CenterParent;
+            set.ShowDialog(this);
+        }
+        private void chromeBrowser_GetMousePosOnClick(object sender, FrameLoadEndEventArgs e)
+        {
+            if (e.Frame.IsMain)
+            {
+                chromeBrowser.ExecuteScriptAsync(@"
+                    document.addEventListener('click', function(e) {
+                        var parent = e.target.parentElement;
+                        CefSharp.PostMessage(''+e.pageX+','+e.pageY);
+                    }, false);
+                ");
+            }
+        }
+        private void chromeBrowser_SetMousePos(object sender, JavascriptMessageReceivedEventArgs e)
+        {
+            if (e.Message != null)
+            {
+                var msg = Convert.ToString(e.Message).Split(',');
+                if (autoUseA.Checked && autoUsePosA == default(Point))
+                {
+                    autoUsePosA.X = Int32.Parse(msg[0]);
+                    autoUsePosA.Y = Int32.Parse(msg[1]);
+                }
+                else if (autoUseB.Checked && autoUsePosB == default(Point))
+                {
+                    autoUsePosB.X = Int32.Parse(msg[0]);
+                    autoUsePosB.Y = Int32.Parse(msg[1]);
+                }
+                else if (autoUseC.Checked && autoUsePosC == default(Point))
+                {
+                    autoUsePosC.X = Int32.Parse(msg[0]);
+                    autoUsePosC.Y = Int32.Parse(msg[1]);
+                }
+            }
+        }
+        public void InitAutoUse(string owner)
+        {
+            if (owner == "A")
+            {
+                if (autoUseA.Checked && autoUsePosA != default(Point))
+                {
+                    chromeBrowser.GetBrowser().GetHost().SendMouseClickEvent(autoUsePosA.X, autoUsePosA.Y, MouseButtonType.Left, false, 1, CefEventFlags.None);
+                    Task.Delay(15);
+                    chromeBrowser.GetBrowser().GetHost().SendMouseClickEvent(autoUsePosA.X, autoUsePosA.Y, MouseButtonType.Left, true, 1, CefEventFlags.None);
+                }
+            }
+            else if (owner == "B")
+            {
+                if (autoUseB.Checked && autoUsePosB != default(Point))
+                {
+                    chromeBrowser.GetBrowser().GetHost().SendMouseClickEvent(autoUsePosB.X, autoUsePosB.Y, MouseButtonType.Left, false, 1, CefEventFlags.None);
+                    Task.Delay(15);
+                    chromeBrowser.GetBrowser().GetHost().SendMouseClickEvent(autoUsePosB.X, autoUsePosB.Y, MouseButtonType.Left, true, 1, CefEventFlags.None);
+                }
+            }
+            else if (owner == "C")
+            {
+                if (autoUseC.Checked && autoUsePosC != default(Point))
+                {
+                    chromeBrowser.GetBrowser().GetHost().SendMouseClickEvent(autoUsePosC.X, autoUsePosC.Y, MouseButtonType.Left, false, 1, CefEventFlags.None);
+                    Task.Delay(15);
+                    chromeBrowser.GetBrowser().GetHost().SendMouseClickEvent(autoUsePosC.X, autoUsePosC.Y, MouseButtonType.Left, true, 1, CefEventFlags.None);
+                }
+            }
+        }
+        private void autoUseA_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (autoUseA.CheckState == CheckState.Checked)
+            {
+                autoUseA.BackColor = Color.PeachPuff;
+                if (autoUseTimerA.Timer == null)
+                {
+                    autoUseTimerA.owner = "A";
+                    autoUseTimerA.interval = autoUseIntervalA;
+                    autoUseTimerA.InitTimer();
+                }
+                else if (autoUseTimerA.Timer != null && autoUseTimerA.Timer.Enabled)
+                {
+                    autoUseTimerA.interval = autoUseTimerA.Timer.Interval = autoUseIntervalA;
+                }
+                else if (autoUseTimerA.Timer != null && !autoUseTimerA.Timer.Enabled)
+                {
+                    autoUseTimerA.interval = autoUseTimerA.Timer.Interval = autoUseIntervalA;
+                    autoUseTimerA.Timer.Start();
+                }
+            }
+            else
+            {
+                autoUseA.BackColor = Color.Gray;
+                autoUsePosA = default(Point);
+                if (autoUseTimerA.Timer != null && autoUseTimerA.Timer.Enabled) { autoUseTimerA.Timer.Stop(); }
+            }
+        }
+        private void autoUseB_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (autoUseB.CheckState == CheckState.Checked)
+            {
+                autoUseB.BackColor = Color.PeachPuff;
+                if (autoUseTimerB.Timer == null)
+                {
+                    autoUseTimerB.owner = "B";
+                    autoUseTimerB.interval = autoUseIntervalB;
+                    autoUseTimerB.InitTimer();
+                }
+                else if (autoUseTimerB.Timer != null && autoUseTimerB.Timer.Enabled)
+                {
+                    autoUseTimerB.interval = autoUseTimerB.Timer.Interval = autoUseIntervalB;
+                }
+                else if (autoUseTimerB.Timer != null && !autoUseTimerB.Timer.Enabled)
+                {
+                    autoUseTimerB.interval = autoUseTimerB.Timer.Interval = autoUseIntervalB;
+                    autoUseTimerB.Timer.Start();
+                }
+            }
+            else
+            {
+                autoUseB.BackColor = Color.Gray;
+                autoUsePosB = default(Point);
+                if (autoUseTimerB.Timer != null && autoUseTimerB.Timer.Enabled) { autoUseTimerB.Timer.Stop(); }
+            }
+        }
+        private void autoUseC_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (autoUseC.CheckState == CheckState.Checked)
+            {
+                autoUseC.BackColor = Color.PeachPuff;
+                if (autoUseTimerC.Timer == null)
+                {
+                    autoUseTimerC.owner = "C";
+                    autoUseTimerC.interval = autoUseIntervalC;
+                    autoUseTimerC.InitTimer();
+                }
+                else if (autoUseTimerC.Timer != null && autoUseTimerC.Timer.Enabled)
+                {
+                    autoUseTimerC.interval = autoUseTimerC.Timer.Interval = autoUseIntervalC;
+                }
+                else if (autoUseTimerC.Timer != null && !autoUseTimerC.Timer.Enabled)
+                {
+                    autoUseTimerC.interval = autoUseTimerC.Timer.Interval = autoUseIntervalC;
+                    autoUseTimerC.Timer.Start();
+                }
+            }
+            else
+            {
+                autoUseC.BackColor = Color.Gray;
+                autoUsePosC = default(Point);
+                if (autoUseTimerC.Timer != null && autoUseTimerC.Timer.Enabled) { autoUseTimerC.Timer.Stop(); }
+            }
+        }
+        internal void SetAutoUseA(int interval)
+        {
+            if (autoUseTimerA.Timer == null)
+            {
+                autoUseIntervalA = autoUseTimerA.interval = interval;
+            }
+            else if (autoUseTimerA.Timer != null)
+            {
+                autoUseIntervalA = autoUseTimerA.interval = autoUseTimerA.Timer.Interval = interval;
+            }
+        }
+        internal void SetAutoUseB(int interval)
+        {
+            if (autoUseTimerB.Timer == null)
+            {
+                autoUseIntervalB = autoUseTimerB.interval = interval;
+            }
+            else if (autoUseTimerB.Timer != null)
+            {
+                autoUseIntervalB = autoUseTimerB.interval = autoUseTimerB.Timer.Interval = interval;
+            }
+        }
+        internal void SetAutoUseC(int interval)
+        {
+            if (autoUseTimerC.Timer == null)
+            {
+                autoUseIntervalC = autoUseTimerC.interval = interval;
+            }
+            else if (autoUseTimerC.Timer != null)
+            {
+                autoUseIntervalC = autoUseTimerC.interval = autoUseTimerC.Timer.Interval = interval;
+            }
+        }
+
+        // Send Keyboard Keystroke
         public void sendKeyCodeToBrowser(int keyCodeHex)
         {
             KeyEvent k = new KeyEvent();

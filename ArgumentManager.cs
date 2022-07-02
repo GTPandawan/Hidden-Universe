@@ -17,7 +17,7 @@ namespace HiddenUniverse_WebClient
         FlyffWCForm mainForm = FlyffWCForm.Instance;
 
         // conditions
-        bool profileCheck, resCheck, fsCheck, pixelCheck, disCheck, assistCheck, delayBBCheck, leechCheck;
+        bool profileCheck, resCheck, fsCheck, pixelCheck, disCheck, assistCheck, delayBBCheck, leechCheck, autoUseCheck;
 
         private ArgumentManager()
         {
@@ -27,7 +27,7 @@ namespace HiddenUniverse_WebClient
 
         public void InitializeArguments()
         {
-            profileCheck = resCheck = fsCheck = pixelCheck = disCheck = assistCheck = delayBBCheck = leechCheck = false;
+            profileCheck = resCheck = fsCheck = pixelCheck = disCheck = assistCheck = delayBBCheck = leechCheck = autoUseCheck = false;
             userArgs = Environment.GetCommandLineArgs();
             foreach (string arg in userArgs)
             {
@@ -39,6 +39,7 @@ namespace HiddenUniverse_WebClient
                 if (!assistCheck) { AssistModeArg(arg); }
                 if (!delayBBCheck) { DelayBetweenBuffsArg(arg); }
                 if (!leechCheck) { LeechModeArg(arg); }
+                if (!autoUseCheck) { AutoUseArg(arg); }
             }
         }
         private void ProfileArg(string arg)
@@ -131,6 +132,16 @@ namespace HiddenUniverse_WebClient
             {
                 mainForm.EnableAutoFollow();
                 leechCheck = true;
+            }
+        }
+        private void AutoUseArg(string arg)
+        {
+            string rg = @"(/autouse)";
+            GroupCollection gc = RegexCheck.Test(arg, rg);
+            if (gc != null)
+            {
+                mainForm.EnableAutoUse();
+                autoUseCheck = true;
             }
         }
     }
