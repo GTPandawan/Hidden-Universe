@@ -68,6 +68,10 @@
             this.autoUseATime.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autoUseATime.FormattingEnabled = true;
             this.autoUseATime.Items.AddRange(new object[] {
+            "Every 2 seconds",
+            "Every 3 seconds",
+            "Every 4 seconds",
+            "Every 5 seconds",
             "Every 10 seconds",
             "Every 30 seconds",
             "Every 60 seconds",
@@ -126,6 +130,10 @@
             this.autoUseBTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autoUseBTime.FormattingEnabled = true;
             this.autoUseBTime.Items.AddRange(new object[] {
+            "Every 2 seconds",
+            "Every 3 seconds",
+            "Every 4 seconds",
+            "Every 5 seconds",
             "Every 10 seconds",
             "Every 30 seconds",
             "Every 60 seconds",
@@ -181,6 +189,10 @@
             this.autoUseCTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autoUseCTime.FormattingEnabled = true;
             this.autoUseCTime.Items.AddRange(new object[] {
+            "Every 2 seconds",
+            "Every 3 seconds",
+            "Every 4 seconds",
+            "Every 5 seconds",
             "Every 10 seconds",
             "Every 30 seconds",
             "Every 60 seconds",

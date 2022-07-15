@@ -27,7 +27,7 @@ namespace HiddenUniverse_WebClient
             var items = autoUseATime.Items;
             for (int i = 0; i < items.Count; i++)
             {
-                GroupCollection gc = RegexCheck.Test(autoUseATime.GetItemText(items[i]), "Every ([0-9]{2}) seconds");
+                GroupCollection gc = RegexCheck.Test(autoUseATime.GetItemText(items[i]), "Every ([0-9]{1,2}) seconds");
                 if (gc != null)
                 {
                     var interval = Int32.Parse(gc[1].Value) * 1000;
@@ -51,7 +51,7 @@ namespace HiddenUniverse_WebClient
 
         private void autoUseATime_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GroupCollection gc = RegexCheck.Test(autoUseATime.GetItemText(autoUseATime.SelectedItem), "Every ([0-9]{2}) seconds");
+            GroupCollection gc = RegexCheck.Test(autoUseATime.GetItemText(autoUseATime.SelectedItem), "Every ([0-9]{1,2}) seconds");
             if (gc != null)
             {
                 var interval = Int32.Parse(gc[1].Value);
@@ -70,7 +70,7 @@ namespace HiddenUniverse_WebClient
 
         private void autoUseBTime_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GroupCollection gc = RegexCheck.Test(autoUseBTime.GetItemText(autoUseBTime.SelectedItem), "Every ([0-9]{2}) seconds");
+            GroupCollection gc = RegexCheck.Test(autoUseBTime.GetItemText(autoUseBTime.SelectedItem), "Every ([0-9]{1,2}) seconds");
             if (gc != null)
             {
                 var interval = Int32.Parse(gc[1].Value);
@@ -89,7 +89,7 @@ namespace HiddenUniverse_WebClient
 
         private void autoUseCTime_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GroupCollection gc = RegexCheck.Test(autoUseCTime.GetItemText(autoUseCTime.SelectedItem), "Every ([0-9]{2}) seconds");
+            GroupCollection gc = RegexCheck.Test(autoUseCTime.GetItemText(autoUseCTime.SelectedItem), "Every ([0-9]{1,2}) seconds");
             if (gc != null)
             {
                 var interval = Int32.Parse(gc[1].Value);

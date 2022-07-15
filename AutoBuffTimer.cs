@@ -20,6 +20,7 @@ namespace HiddenUniverse_WebClient
         private string[] selectedBuffsSlots;
         public static int delaybb = 1750;
         public DateTime cdStart, abStart;
+        int defaultFIndex;
 
         public void InitTimer()
         {
@@ -48,21 +49,35 @@ namespace HiddenUniverse_WebClient
         }
         private void DelaybbTimer_Tick(object sender, EventArgs e)
         {
-            if (currentBuffIndex == 0) { selectedBuffsSlots = FlyffWCForm.Instance.selectedBuffSlots.ToArray(); }
-            int fKeyIndex, nKeyIndex;
-            FlyffWCForm.Instance.AutoBuffStringConvert(selectedBuffsSlots[currentBuffIndex], out fKeyIndex, out nKeyIndex);
-            FlyffWCForm.Instance.sendKeyCodeToBrowser(Keybinds.GetTaskbars()[fKeyIndex]);
-            Task.Delay(75);// delay between switching hotbar & sending a buff command
-            FlyffWCForm.Instance.sendKeyCodeToBrowser(Keybinds.GetSlots()[nKeyIndex]);
-            currentBuffIndex++;
-            if (currentBuffIndex == selectedBuffsSlots.Length && FlyffWCForm.Instance.healWasEnabled)
+            if (selectedBuffsSlots == null || currentBuffIndex != selectedBuffsSlots.Length)
             {
-                currentBuffIndex = 0;
-                FlyffWCForm.Instance.autoHealBox.Checked = true;
                 delaybbTimer.Stop();
-                return;
+                if (currentBuffIndex == 0) { 
+                    selectedBuffsSlots = FlyffWCForm.Instance.selectedBuffSlots.ToArray();
+                    int f, n;
+                    FlyffWCForm.Instance.AutoBuffStringConvert(selectedBuffsSlots[currentBuffIndex], out f, out n);
+                    defaultFIndex = f;
+                }
+                int fKeyIndex, nKeyIndex;
+                FlyffWCForm.Instance.AutoBuffStringConvert(selectedBuffsSlots[currentBuffIndex], out fKeyIndex, out nKeyIndex);
+                FlyffWCForm.Instance.sendKeyCodeToBrowser(Keybinds.GetTaskbars()[fKeyIndex]);
+                Task.Delay(75);// delay between switching hotbar & sending a buff command
+                FlyffWCForm.Instance.sendKeyCodeToBrowser(Keybinds.GetSlots()[nKeyIndex]);
+                currentBuffIndex++;
+                delaybbTimer.Start();
             }
-            else if (currentBuffIndex == selectedBuffsSlots.Length) { currentBuffIndex = 0; delaybbTimer.Stop(); }
+            else
+            {
+                Task.Delay(1000);
+                if (FlyffWCForm.Instance.healWasEnabled)
+                {
+                    FlyffWCForm.Instance.autoHealBox.Checked = true;
+                }
+                FlyffWCForm.Instance.sendKeyCodeToBrowser(Keybinds.GetTaskbars()[defaultFIndex]);
+                defaultFIndex = default(int);
+                currentBuffIndex = 0;
+                delaybbTimer.Stop();
+            }
         }
         public void InitCDTimer()
         {
